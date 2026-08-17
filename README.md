@@ -1,6 +1,6 @@
 # LYRA
 
-A pretty CLI for ripping YouTube / YouTube Music links to Opus audio with embedded, square album art.
+A CLI for ripping YouTube / YouTube Music links to Opus audio.
 
 ```
  888

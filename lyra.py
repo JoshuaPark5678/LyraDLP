@@ -41,7 +41,7 @@ BANNER = r"""
                "Y88P"
 """
 
-TAGLINE = "yt-dlp powered opus ripper"
+TAGLINE = "melodic opus ripper"
 
 
 def print_banner() -> None:
