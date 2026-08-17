@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Convenience launcher: runs lyra.py using the project's venv.
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+exec "$DIR/.venv/bin/python" "$DIR/lyra.py" "$@"
