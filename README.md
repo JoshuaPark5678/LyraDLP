@@ -39,7 +39,7 @@ python3 -m venv .venv
 
 ## Usage
 
-Interactive mode (recommended) — launch with no arguments and paste links as you go:
+Interactive mode (recommended). Launch with no arguments and paste links as you go:
 
 ```bash
 ./lyra
