@@ -20,6 +20,7 @@ A CLI for ripping YouTube / YouTube Music links to Opus audio.
 
 - Downloads to Opus (best VBR quality by default) via `yt-dlp` + `ffmpeg`
 - Embeds album art, automatically center-cropped to a square if the source thumbnail isn't
+- Embeds lyrics from [LRCLIB](https://lrclib.net) when available (plain text plus time-synced LRC, no API key), embedded as tags and written as same-named `.lrc` sidecar files for players like rmpc
 - Auto-detects playlists/albums and organizes them into their own subfolder
 - Interactive mode: launch with no arguments and it drops into a `lyra>` prompt that waits for links
 - Retries failed downloads automatically (YouTube's bot-detection can be flaky)
@@ -72,6 +73,10 @@ options:
                         Read cookies from BROWSER (chrome, firefox, edge, brave,
                         opera, safari, vivaldi, whale) to authenticate as your
                         logged-in session. Helps with 403s on some tracks.
+  -L, --refresh-lyrics  Skip downloading; fetch lyrics and .lrc sidecars for
+                        audio files (.opus, .mp3, .m4a, .flac, ...) already
+                        under --output-dir, including files not downloaded
+                        by LYRA
 ```
 
 ### Interactive commands
