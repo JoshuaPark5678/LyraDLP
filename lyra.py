@@ -434,14 +434,19 @@ def fetch_lyrics(artist: str | None, track: str | None, duration: float | None) 
         exact = lrclib_get("/get", query)
     except Exception:  # noqa: BLE001
         exact = None
-    if exact:
+    if exact and exact.get("syncedLyrics"):
         return exact
-
+    # /api/get is a single-record exact match and may return a plain-only
+    # duplicate even when synced submissions exist, so a plain "exact" hit
+    # is not final: search and let the scorer prefer a synced candidate.
     try:
         results = lrclib_get("/search", {"q": f"{artist or ''} {track}".strip()})
     except Exception:  # noqa: BLE001
-        return None
-    return pick_best_lyrics(results or [], artist, track, duration)
+        return exact
+    best = pick_best_lyrics(results or [], artist, track, duration)
+    if best and (best.get("syncedLyrics") or exact is None):
+        return best
+    return exact
 
 
 def pick_best_lyrics(
@@ -459,6 +464,10 @@ def pick_best_lyrics(
             value += 2
         if result.get("artistName") and normalize_text(result["artistName"]) == normalize_text(artist):
             value += 1
+        # LRC is what players actually display line-by-line; a plain-only
+        # entry with identical metadata would otherwise win the tie.
+        if result.get("syncedLyrics"):
+            value += 2
         result_duration = result.get("duration")
         if duration and result_duration:
             value += max(0.0, 1 - abs(float(result_duration) - float(duration)) / 10)
